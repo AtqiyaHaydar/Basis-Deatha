@@ -25,7 +25,7 @@ class Award(Seeding):
     ]
 
     for _ in range(num_records):
-      gameID = self.videogame_ids[self.random.randint(0, len(self.videogame_ids - 1))]
+      gameID = self.videogame_ids[self.random.randint(0, len(self.videogame_ids) - 1)]
       categories = self.random.choice(award_categories)
       tahun = self.fake.year()
 

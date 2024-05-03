@@ -10,8 +10,8 @@ class VideoGamesDLS(Seeding):
     self.dlc_ids = self.get_all_dlc_id()
     self.videogames_ids = self.get_all_videogames_id()
 
-    gameID = self.videogames_ids[self.random.randint(0, len(self.videogames_ids - 1))]
-    dlcID = self.dlc_ids[self.random.randint(0, len(self.dlc_ids - 1))]
+    gameID = self.videogames_ids[self.random.randint(0, len(self.videogames_ids) - 1)]
+    dlcID = self.dlc_ids[self.random.randint(0, len(self.dlc_ids) - 1)]
 
     sql = f"INSERT INTO VIDEOGAMESDLC (gameID, dlcID) VALUES (%s, %s)"
     

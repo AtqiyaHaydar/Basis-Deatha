@@ -11,8 +11,8 @@ class MemilikiAplikasi(Seeding):
     self.user_ids = self.get_all_user_id()
 
     for _ in range(num_records):
-      userID = self.user_ids[self.random.randint(0, len(self.user_ids - 1))]
-      appID = self.app_ids[self.random.randint(0, len(self.app_ids - 1))]
+      userID = self.user_ids[self.random.randint(0, len(self.user_ids) - 1)]
+      appID = self.app_ids[self.random.randint(0, len(self.app_ids) - 1)]
       total_waktu = self.fake.random_int(0, 1000000)
       waktu_terakhir = self.fake.date_time()
       jumlah_achievement = self.fake.random_int(0, 100)

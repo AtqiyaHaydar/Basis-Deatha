@@ -11,8 +11,8 @@ class Follow(Seeding):
     self.user_ids = self.get_all_user_id()
 
     for _ in range(num_orders):
-      devID = self.dev_ids[self.random.randint(0, len(self.dev_ids - 1))]
-      userID = self.user_ids[self.random.randint(0, len(self.user_ids - 1))]
+      devID = self.dev_ids[self.random.randint(0, len(self.dev_ids) - 1)]
+      userID = self.user_ids[self.random.randint(0, len(self.user_ids) - 1)]
 
       sql = f"INSERT INTO FOLLOW (devID, userID) VALUES (%s, %s)"
 

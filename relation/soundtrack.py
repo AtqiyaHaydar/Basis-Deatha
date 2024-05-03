@@ -9,7 +9,7 @@ class SoundTrack(Seeding):
     self.app_ids = self.get_all_app_id()
 
     for _ in range(num_records):
-      soundtrackID = self.app_ids[self.random.randint(0, len(self.app_ids - 1))]
+      soundtrackID = self.app_ids[self.random.randint(0, len(self.app_ids) - 1)]
       durasi_total_lagu = self.fake.random_int(30, 300)
 
       sql = f"INSERT INTO SOUNDTRACK (soundtrackID, durasi_total_lagu) VALUES (%s, %s)"
