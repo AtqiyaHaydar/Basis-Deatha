@@ -9,6 +9,8 @@ class Seeding():
         self.connection = connection
         self.cursor = self.connection.cursor()
         self.db = self.connection
+        self.user_ids = []
+        self.developer_ids = []
     def seeding(self, num_records):
         pass
 
@@ -21,4 +23,24 @@ class Seeding():
         today = datetime.today()
         age = today.year - date_of_birth.year - ((today.month, today.day) < (date_of_birth.month, date_of_birth.day))
         return age
-        return fake.random_number(digits=None, fix_len=False)
+
+    def get_all_user_id(self):
+        self.cursor.execute("SELECT userID FROM USER")
+        result = self.cursor.fetchall()
+        new_user_ids = []
+
+        for row in result:
+            new_user_ids.append(row[0])
+        
+        return new_user_ids
+
+    def get_all_dev_id(self):
+        self.cursor.execute("SELECT devID FROM DEVELOPER")
+        result = self.cursor.fetchall()
+        new_dev_ids = []
+
+        for row in result:
+            new_dev_ids.append(row[0])
+        
+        return new_dev_ids
+        
