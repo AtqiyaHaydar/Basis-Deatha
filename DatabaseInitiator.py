@@ -1,21 +1,19 @@
 import mysql.connector;
 
 class DatabaseInitiator:
-    def __init__(self):
-        self.connection = mysql.connector.connect(
-            port = 49680,
-            host = "localhost",
-            user = "root",
-            password = "",
-        )
+    def __init__(self, firstConnection):
+        self.connection = firstConnection
         self.cursor = self.connection.cursor()
         self.cursor.execute("SHOW DATABASES LIKE 'stim'")
+        self.isDatabaseInitialized = False
         database_exists = bool(self.cursor.fetchall())
 
         # If the database doesn't exist, create it
         if not database_exists:
             self.cursor.execute("CREATE DATABASE stim")
                 # Close the connection without specifying a database
+        else:
+            self.isDatabaseInitialized = True
         self.connection.close()
 
         # Reconnect to MySQL server and specify the 'stim' database
@@ -26,7 +24,12 @@ class DatabaseInitiator:
             password="",
             database="stim"
         )
+
+        self.returnedConnection = self.connection
         self.cursor = self.connection.cursor()
+
+    def getStimDatabase(self):
+        return self.returnedConnection
 
     def CreateTableApps(self):
         self.cursor.execute(
@@ -262,6 +265,9 @@ class DatabaseInitiator:
             '''
         )
     def InitiateAllTable(self):
+        if(self.isDatabaseInitialized):
+            print("Database has already been initialized")
+            return
         self.CreateTableDeveloper()
         self.CreateTableApps()
         self.CreateTableUser()
@@ -283,8 +289,3 @@ class DatabaseInitiator:
 
         self.connection.commit()
         self.connection.close()
-
-db = DatabaseInitiator()
-db.InitiateAllTable()
-print("Database has been initailized")
-print("Check your maria db server")

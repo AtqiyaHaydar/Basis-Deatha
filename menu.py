@@ -1,7 +1,7 @@
 from relation.developer import Developer
 from relation.user import User
 from relation.pertemanan import Pertemanan
-
+from DatabaseInitiator import DatabaseInitiator
 class menu():
     def __init__(self, connection):
         self.userInput = ""
@@ -64,3 +64,5 @@ class menu():
         # Execute Insertion
         self.executeDeveloper()
         self.executeUser()
+        self.executePertemanan()
+        

@@ -1,14 +1,22 @@
 import mysql.connector
 from menu import menu
+from DatabaseInitiator import DatabaseInitiator
 
-db = mysql.connector.connect(
-    port = 49680,
-    host = "localhost",
-    user = "root",
-    password = "",
-    database = "stim"
+
+# Please Change this to your exact machine 
+connection = mysql.connector.connect(
+            port = 49680,
+            host = "localhost",
+            user = "root",
+            password = "",
 )
-num_records = 50
+
+DatabaseInit = DatabaseInitiator(connection)
+DatabaseInit.InitiateAllTable()
+
+# Get Stim Database
+db = DatabaseInit.getStimDatabase()
+
 # Developer
 Menu = menu(db)
 
