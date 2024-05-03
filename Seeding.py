@@ -71,6 +71,16 @@ class Seeding():
         new_song_id = []
 
         for row in result:
-            new_song_id.append(result[0])
+            new_song_id.append(row[0])
         
         return new_song_id
+
+    def get_all_videogames_id(self):
+        self.cursor.execute("SELECT gameID FROM VIDEOGAMES")
+        result = self.cursor.fetchall()
+        new_videogames_id = []
+
+        for row in result:
+            new_videogames_id.append(row[0])
+        
+        return new_videogames_id
