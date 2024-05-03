@@ -11,6 +11,7 @@ class Seeding():
         self.db = self.connection
         self.user_ids = []
         self.developer_ids = []
+        self.random = random
     def seeding(self, num_records):
         pass
 
