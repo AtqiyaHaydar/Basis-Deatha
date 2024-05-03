@@ -54,3 +54,23 @@ class Seeding():
             new_app_ids.append(row[0])
         
         return new_app_ids
+
+    def get_all_soundtrack_id(self):
+        self.cursor.execute("SELECT soundtrackID FROM SOUNDTRACK")
+        result = self.cursor.fetchall()
+        new_soundtrack_id = []
+
+        for row in result:
+            new_soundtrack_id.append(row[0])
+        
+        return new_soundtrack_id
+
+    def get_all_song_id(self):
+        self.cursor.execute("SELECT laguID FROM LAGU")
+        result = self.cursor.fetchall()
+        new_song_id = []
+
+        for row in result:
+            new_song_id.append(result[0])
+        
+        return new_song_id
