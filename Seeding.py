@@ -1,6 +1,7 @@
 from faker import Faker
-from datetime import datetime
 import mysql.connector
+from datetime import datetime
+import random
 
 class Seeding():
     def __init__(self, connection):
