@@ -2,8 +2,8 @@ from Seeding import Seeding
 
 class Genre(Seeding):
   def __init__(self, connection):
-    self.videogames_ids = []
     super.__init__(connection)
+    self.videogames_ids = []
   
   def seeding(self, num_records):
     self.videogames_ids = self.get_all_videogames_id()
@@ -15,7 +15,7 @@ class Genre(Seeding):
 
       sql = f"INSERT INTO GENRE (gameID, genre) VALUES (%s, %s)"
 
-      val = (gameID, sql)
+      val = (gameID, genre)
 
       self.cursor.execute(sql, val)
       self.connection.commit()
