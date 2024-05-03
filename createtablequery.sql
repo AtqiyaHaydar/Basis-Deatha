@@ -25,7 +25,7 @@ CREATE TABLE User(
     email VARCHAR(255) NOT NULL,
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    name_depan VARCHAR(255) NOT NULL, 
+    nama_depan VARCHAR(255) NOT NULL, 
     nama_belakang VARCHAR(255) DEFAULT "",
     tanggal_lahir date,
     usia INTEGER,
