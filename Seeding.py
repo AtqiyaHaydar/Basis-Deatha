@@ -84,3 +84,13 @@ class Seeding():
             new_videogames_id.append(row[0])
         
         return new_videogames_id
+
+    def get_all_dlc_id(self):
+        self.cursor.execute("SELECT dlcID FROM DLC")
+        result = self.cursor.fetchall()
+        new_dlc_id = []
+
+        for row in result:
+            new_dlc_id.append(row[0])
+        
+        return new_dlc_id
