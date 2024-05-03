@@ -1,8 +1,13 @@
 import mysql.connector;
 
 class DatabaseInitiator:
-    def __init__(self, firstConnection):
-        self.connection = firstConnection
+    def __init__(self, port, host, user, password):
+        self.connection = mysql.connector.connect(
+            port=port,
+            host=host,
+            user=user,
+            password=password
+        )
         self.cursor = self.connection.cursor()
         self.cursor.execute("SHOW DATABASES LIKE 'stim'")
         self.isDatabaseInitialized = False
@@ -18,10 +23,10 @@ class DatabaseInitiator:
 
         # Reconnect to MySQL server and specify the 'stim' database
         self.connection = mysql.connector.connect(
-            port=49680,
-            host="localhost",
-            user="root",
-            password="",
+            port=port,
+            host=host,
+            user=user,
+            password=password,
             database="stim"
         )
 

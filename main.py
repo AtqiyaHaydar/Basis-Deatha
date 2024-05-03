@@ -2,16 +2,15 @@ import mysql.connector
 from menu import menu
 from DatabaseInitiator import DatabaseInitiator
 
+# Check your port by Input
+# SHOW GLOBAL VARIABLES LIKE 'port'
+port = 49680
+host = "localhost"
+user = "root"
+password = ""
 
-# Please Change this to your exact machine 
-connection = mysql.connector.connect(
-            port = 49680,
-            host = "localhost",
-            user = "root",
-            password = "",
-)
 
-DatabaseInit = DatabaseInitiator(connection)
+DatabaseInit = DatabaseInitiator(port, host, user, password)
 DatabaseInit.InitiateAllTable()
 
 # Get Stim Database
