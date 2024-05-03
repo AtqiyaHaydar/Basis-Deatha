@@ -1,6 +1,6 @@
 from Seeding import Seeding
 
-class DLCDetail(Seeding):
+class DLC(Seeding):
   def __init__(self, connection):
     super().__init__(connection)
   

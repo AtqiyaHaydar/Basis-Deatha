@@ -1,7 +1,7 @@
 from Seeding import Seeding
 
 class User(Seeding):
-  def __init__(seld, connection):
+  def __init__(self, connection):
     super().__init__(connection)
   
   def seeding(self, num_records):
