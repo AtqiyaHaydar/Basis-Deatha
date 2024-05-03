@@ -45,3 +45,12 @@ class Seeding():
         
         return new_dev_ids
         
+    def get_all_app_id(self):
+        self.cursor.execute("SELECT appID FROM APPS")
+        result = self.cursor.fetchall()
+        new_app_ids = []
+
+        for row in result:
+            new_app_ids.append(row[0])
+        
+        return new_app_ids
