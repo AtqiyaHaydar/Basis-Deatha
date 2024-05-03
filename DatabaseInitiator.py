@@ -31,14 +31,14 @@ class DatabaseInitiator:
     def CreateTableApps(self):
         self.cursor.execute(
             '''
-            CREATE TABLE Apps(
-                appID INTEGER AUTO_INCREMENT PRIMARY KEY NOT NULL ,
+            CREATE TABLE Apps (
+                appID INTEGER PRIMARY KEY AUTO_INCREMENT,
                 devID INTEGER NOT NULL,
                 judul VARCHAR(50) NOT NULL,
-                tanggal_peluncuran date,
-                ukuran FLOAT,
+                tanggal_peluncuran DATE,
+                ukuran INTEGER,
                 deskripsi VARCHAR(255),
-                harga INTEGER DEFAULT 0,
+                harga INTEGER NOT NULL DEFAULT 0,
                 FOREIGN KEY (devID) REFERENCES Developer(devID) ON DELETE RESTRICT
             );
             '''
@@ -57,23 +57,23 @@ class DatabaseInitiator:
         self.cursor.execute(
             '''
             CREATE TABLE DLC(
-                dlcID INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
-                gameID INTEGER NOT NULL,
-                FOREIGN KEY (gameID) REFERENCES VideoGames(gameID) ON DELETE CASCADE
+                dlcID INTEGER NOT NULL AUTO_INCREMENT,
+                judul VARCHAR(50) NOT NULL,
+                harga INTEGER NOT NULL DEFAULT 0,
+                tanggal_peluncuran DATE,
+                PRIMARY KEY(dlcID)
             )
             '''        
         )
 
-    def CreateTableDLCDetail(self):
+    def CreateTableVideoGamesDLC(self):
         self.cursor.execute(
             '''
-            CREATE TABLE DLCDetail(
-                dlcID INTEGER NOT NULL,
-                judul VARCHAR(50) NOT NULL,
-                harga CHAR(10) NOT NULL DEFAULT '0',
-                tanggal_peluncuran date,
-                PRIMARY KEY(dlcID),
-                FOREIGN KEY (dlcID) REFERENCES DLC(dlcID) ON DELETE CASCADE
+            CREATE TABLE VideoGamesDLC(
+                dlcID INTEGER PRIMARY KEY NOT NULL,
+                gameID INTEGER NOT NULL,
+                FOREIGN KEY (dlcID) REFERENCES DLC(dlcID) ON DELETE CASCADE,
+                FOREIGN KEY (gameID) REFERENCES VideoGames(gameID) ON DELETE CASCADE
             )
             '''
         )
@@ -81,12 +81,12 @@ class DatabaseInitiator:
     def CreateTableDeveloper(self):
         self.cursor.execute(
             '''
-            CREATE TABLE Developer(
+            CREATE TABLE Developer (
                 devID INTEGER PRIMARY KEY AUTO_INCREMENT,
                 email VARCHAR(255) NOT NULL,
                 username VARCHAR(255) NOT NULL,
                 password VARCHAR(255) NOT NULL,
-                nama_depan VARCHAR(255) NOT NULL, 
+                nama_depan VARCHAR(255) NOT NULL,
                 nama_belakang VARCHAR(255) DEFAULT "",
                 tanggal_lahir DATE,
                 usia INTEGER
@@ -115,12 +115,12 @@ class DatabaseInitiator:
         self.cursor.execute(
             '''
             CREATE TABLE MemilikiAplikasi(
-                userID INTEGER NOT NULL 
+                userID INTEGER NOT NULL, 
                 appID INTEGER NOT NULL,
-                total_waktu FLOAT,
+                total_waktu FLOAT DEFAULT 0,
                 waktu_terakhir date,
                 jumlah_achievement INTEGER DEFAULT 0,
-                rating INTEGER CHECK(rating >= 0 and rating <= 5) DEFAULT 0,
+                rating INTEGER CHECK(rating >= 0 and rating <= 5),
                 PRIMARY KEY (userID, appID),
                 FOREIGN KEY (userID) REFERENCES User(userID) ON DELETE CASCADE,
                 FOREIGN KEY (appID) REFERENCES Apps(appID) ON DELETE CASCADE
@@ -131,7 +131,7 @@ class DatabaseInitiator:
         self.cursor.execute(
             '''
             CREATE TABLE SoundTrack(
-                soundtrackID INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
+                soundtrackID INTEGER PRIMARY KEY NOT NULL,
                 durasi_total_lagu FLOAT DEFAULT 0 NOT NULL,
                 FOREIGN KEY (soundtrackID) REFERENCES Apps(appID) ON DELETE CASCADE
             )
@@ -164,10 +164,10 @@ class DatabaseInitiator:
         self.cursor.execute(
             '''
             CREATE TABLE Follow(
-                developerID INTEGER NOT NULL,
+                devID INTEGER NOT NULL,
                 userID INTEGER NOT NULL,
-                PRIMARY KEY (developerID, userID),
-                FOREIGN KEY (developerID) REFERENCES Developer(developerID) ON DELETE CASCADE,
+                PRIMARY KEY (devID, userID),
+                FOREIGN KEY (devID) REFERENCES Developer(devID) ON DELETE CASCADE,
                 FOREIGN KEY (userID) REFERENCES User(userID) ON DELETE CASCADE
             )
             '''
@@ -191,9 +191,8 @@ class DatabaseInitiator:
             CREATE TABLE Forum(
                 forumID INTEGER NOT NULL AUTO_INCREMENT,
                 judul VARCHAR(255) NOT NULL,
-                waktu_pembuatan_vorum date NOT NULL,
-                PRIMARY KEY(forumID)
-                FOREIGN KEY (userID) REFERENCES User(userID) ON DELETE SET NULL
+                waktu_pembuatan_forum DATE NOT NULL,
+                PRIMARY KEY (forumID)
             )
             '''
         )
@@ -222,9 +221,8 @@ class DatabaseInitiator:
                 waktu_pembuatan_post date NOT NULL,
                 PRIMARY KEY(postID),
                 FOREIGN KEY (forumID) REFERENCES Forum(forumID) ON DELETE CASCADE,
-                FOREIGN KEY (userID) REFERENCES User(userID) ON DELETE CASCADE 
+                FOREIGN KEY (userID) REFERENCES User(userID) ON DELETE CASCADE
             )
-
             '''
         )
     def CreateTableVote(self):
@@ -255,7 +253,7 @@ class DatabaseInitiator:
         self.cursor.execute(
             '''
             CREATE TABLE Genre(
-                gameID INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
+                gameID INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
                 genre VARCHAR(20) NOT NULL,
                 FOREIGN KEY (gameID) REFERENCES VideoGames(gameID) ON DELETE CASCADE
             )
@@ -264,12 +262,13 @@ class DatabaseInitiator:
     def InitiateAllTable(self):
         self.CreateTableDeveloper()
         self.CreateTableApps()
-        # self.CreateTablePertemanan()
+        self.CreateTableUser()
+        self.CreateTablePertemanan()
         self.CreateTableMemilikiAplikasi()
         self.CreateTableVideoGames()
         self.CreateTableSoundtrack()
-        self.CreateTableMenggunakanLagu()
         self.CreateTableLagu()
+        self.CreateTableMenggunakanLagu()
         self.CreateTableAward()
         self.CreateTableGenre()
         self.CreateTableFollow()
@@ -278,10 +277,12 @@ class DatabaseInitiator:
         self.CreateTableVote()
         self.CreateTablePost()
         self.CreateTableDLC()
-        self.CreateTableDLCDetail()
+        self.CreateTableVideoGamesDLC()
 
         self.connection.commit()
         self.connection.close()
 
 db = DatabaseInitiator()
 db.InitiateAllTable()
+print("Database has been initailized")
+print("Check your maria db server")
