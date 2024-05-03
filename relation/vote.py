@@ -13,8 +13,8 @@ class Vote(Seeding):
     vote = ["UPVOTE", "DOWNVOTE"]
 
     for _ in range(num_records):
-      forumID = self.forum_ids[self.random.randint(0, len(self.forum_ids - 1))]
-      userID = self.user_ids[self.random.randint(0, len(self.user_ids - 1))]
+      forumID = self.forum_ids[self.random.randint(0, len(self.forum_ids) - 1)]
+      userID = self.user_ids[self.random.randint(0, len(self.user_ids) - 1)]
       jenis_vote = self.random.choice(vote)
 
       sql = f"INSERT INTO VOTE (forumID, userID, jenis_vote) VALUES (%s, %s)"

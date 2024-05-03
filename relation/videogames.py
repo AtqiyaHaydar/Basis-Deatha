@@ -9,7 +9,7 @@ class VideoGames(Seeding):
     self.app_ids = self.get_all_app_id()
 
     for _ in range(num_records):
-      gameID = self.app_ids[self.random.randint(0, len(self.app_ids - 1))]
+      gameID = self.app_ids[self.random.randint(0, len(self.app_ids) - 1)]
 
       sql = f"INSERT INTO VIDEOGAMES (gameID) VALUES (%s)"
 

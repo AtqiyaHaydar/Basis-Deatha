@@ -11,8 +11,8 @@ class Post(Seeding):
     self.forum_ids = self.get_all_user_id()
 
     for _ in range(num_records):
-      userID = self.user_ids[self.random.randint(0, len(self.user_ids - 1))]
-      forumID = self.forum_ids[self.random.randint(0, len(self.forum_ids - 1))]
+      userID = self.user_ids[self.random.randint(0, len(self.user_ids) - 1)]
+      forumID = self.forum_ids[self.random.randint(0, len(self.forum_ids) - 1)]
       konten_post = self.fake.paragraph()
       waktu_pembuatan_post =  self.faker.date_time_this_year(before_now=True, after_now=False, tzinfo=None)
 
