@@ -39,6 +39,16 @@ class Seeding():
             new_dev_ids.append(row[0])
         
         return new_dev_ids
+
+    def get_all_forum_id(self):
+        self.cursor.execute("SELECT forumID FROM FORUM")
+        result = self.cursor.fetchall()
+        new_forum_ids = []
+
+        for row in result:
+            new_forum_ids.append(row[0])
+        
+        return new_forum_ids
         
     def get_all_app_id(self):
         self.cursor.execute("SELECT appID FROM APPS")
