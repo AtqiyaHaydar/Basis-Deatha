@@ -1,6 +1,6 @@
 from Seeding import Seeding
 
-class Developer(Seeding):
+class Lagu(Seeding):
   def __init__(self, connection):
     super().__init__(connection)
   
