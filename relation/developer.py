@@ -16,7 +16,7 @@ class Developer(Seeding):
 
       sql = f"INSERT INTO DEVELOPER (email, username, password, nama_depan, nama_belakang, tanggal_lahir, usia) VALUES (%s, %s, %s, %s, %s, %s, %s)"
 
-      val = (email, password, username, nama_depan, nama_belakang,tanggal_lahir, usia)
+      val = (email, username, password, nama_depan, nama_belakang,tanggal_lahir, usia)
 
       self.cursor.execute(sql, val)
       self.connection.commit()
