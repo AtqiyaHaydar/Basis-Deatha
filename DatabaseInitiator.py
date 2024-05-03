@@ -82,14 +82,15 @@ class DatabaseInitiator:
         self.cursor.execute(
             '''
             CREATE TABLE Developer (
-                devID INTEGER PRIMARY KEY AUTO_INCREMENT,
+                devID INTEGER AUTO_INCREMENT,
                 email VARCHAR(255) NOT NULL,
                 username VARCHAR(255) NOT NULL,
                 password VARCHAR(255) NOT NULL,
                 nama_depan VARCHAR(255) NOT NULL,
                 nama_belakang VARCHAR(255) DEFAULT "",
                 tanggal_lahir DATE,
-                usia INTEGER
+                usia INTEGER,
+                PRIMARY KEY(devID, email, username)
             )
             '''
         )
@@ -98,16 +99,17 @@ class DatabaseInitiator:
         self.cursor.execute(
             '''
             CREATE TABLE User(
-                userID INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
+                userID INTEGER NOT NULL AUTO_INCREMENT,
                 email VARCHAR(255) NOT NULL,
                 username VARCHAR(255) NOT NULL,
                 password VARCHAR(255) NOT NULL,
-                name_depan VARCHAR(255) NOT NULL, 
+                nama_depan VARCHAR(255) NOT NULL, 
                 nama_belakang VARCHAR(255) DEFAULT "",
                 tanggal_lahir date,
                 usia INTEGER,
                 level INTEGER DEFAULT 0,
-                balance FLOAT DEFAULT 0.0
+                balance INTEGER DEFAULT 0,
+                PRIMARY KEY(userID, email, username)
             )
             '''
         )

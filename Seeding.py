@@ -1,5 +1,4 @@
 from faker import Faker
-import mysql.connector
 from datetime import datetime
 import random
 
@@ -9,18 +8,14 @@ class Seeding():
         self.connection = connection
         self.cursor = self.connection.cursor()
         self.db = self.connection
-        self.user_ids = []
         self.developer_ids = []
         self.random = random
+    
     def seeding(self, num_records):
         pass
 
-    # Generate Username
-    def generate_username(first_name, last_name):
-        return f"{first_name.lower()}.{last_name.lower()}"
-
     # Menghitung Umur
-    def calculate_age(date_of_birth):
+    def calculate_age(self,date_of_birth):
         today = datetime.today()
         age = today.year - date_of_birth.year - ((today.month, today.day) < (date_of_birth.month, date_of_birth.day))
         return age
@@ -104,4 +99,3 @@ class Seeding():
             new_dlc_id.append(row[0])
         
         return new_dlc_id
-    
