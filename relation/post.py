@@ -14,11 +14,11 @@ class Post(Seeding):
       userID = self.user_ids[self.random.randint(0, len(self.user_ids) - 1)]
       forumID = self.forum_ids[self.random.randint(0, len(self.forum_ids) - 1)]
       konten_post = self.fake.paragraph()
-      waktu_pembuatan_post =  self.faker.date_time_this_year(before_now=True, after_now=False, tzinfo=None)
+      waktu_pembuatan_post =  self.fake.date_time_this_year(before_now=True, after_now=False, tzinfo=None)
 
-      sql = f"INSERT INTO POST (userID, forumID, konten_post, waktu_pembuatan_post)"
+      sql = f"INSERT INTO POST (forumID, userID, konten_post, waktu_pembuatan_post) VALUES (%s, %s, %s, %s)"
       
-      val = (userID, forumID, konten_post, waktu_pembuatan_post)
+      val = (forumID, userID, konten_post, waktu_pembuatan_post)
 
       self.cursor.execute(sql, val)
       self.connection.commit()

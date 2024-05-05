@@ -1,4 +1,3 @@
-import mysql.connector
 from menu import menu
 from DatabaseInitiator import DatabaseInitiator
 

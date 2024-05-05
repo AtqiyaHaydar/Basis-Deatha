@@ -6,7 +6,6 @@ from relation.memilikiaplikasi import MemilikiAplikasi
 from relation.follow import Follow
 from relation.videogames import VideoGames
 from relation.dlc import DLC
-from relation.videogamesdlc import VideoGamesDLS
 from relation.award import Award
 from relation.genre import Genre
 from relation.soundtrack import SoundTrack
@@ -23,7 +22,7 @@ class menu():
         self.db = connection
 
     def executeDeveloper(self):
-        if(self.userInput == "Developer" or self.userInput == "All"):
+        if(self.userInput == "Developer" or self.userInput == "All" ):
             developer = Developer(self.db)
             developer.seeding(self.inputAmount)
             print("Success in creating",self.inputAmount,"New Developer")
@@ -38,7 +37,7 @@ class menu():
             pertemanan.seeding(self.inputAmount)
             print("Success in creating",self.inputAmount,"New Pertemanan")
     def executeApps(self):
-        if(self.userInput == "Apps" or self.userInput == "All"):
+        if(self.userInput == "Software" or self.userInput == "All"):
             app = Apps(self.db)
             app.seeding(self.inputAmount)
             print("Success in creating",self.inputAmount,"New Apps")
@@ -63,11 +62,13 @@ class menu():
             dlc = DLC(self.db)
             dlc.seeding(self.inputAmount)
             print("Success in creating",self.inputAmount,"New DLC")
-    def executeVideoGamesDLC(self):
-        if(self.userInput == "VideoGamesDLC" or self.userInput == "All"):
-            videoDlc = VideoGamesDLS(self.db)
-            videoDlc.seeding(self.inputAmount)
-            print("Success in creating",self.inputAmount,"New VideoGamesDLC")
+
+    # DEPRICATED 
+    # def executeVideoGamesDLC(self):
+    #     if(self.userInput == "VideoGamesDLC" or self.userInput == "All"):
+    #         videoDlc = VideoGamesDLS(self.db)
+    #         videoDlc.seeding(self.inputAmount)
+    #         print("Success in creating",self.inputAmount,"New VideoGamesDLC")
     def executeAward(self):
         if(self.userInput == "Award" or self.userInput == "All"):
             award = Award(self.db)
@@ -111,7 +112,7 @@ class menu():
             print("Success in creating",self.inputAmount,"New Membuat Forum Relation")
 
     def executeVote(self):
-        if(self.userInput == ""):
+        if(self.userInput == "Vote" or self.userInput == "All"):
             vote = Vote(self.db)
             vote.seeding(self.inputAmount)
             print("Success in creating",self.inputAmount,"New Vote")
@@ -125,26 +126,26 @@ class menu():
 
     def showMenu(self):
         print("================== ADMIN TABLE INSERTION ==================")
+        print("Note: Tambahkan Seluruh Elemen 9 pertama pada First Time Query")
         menu_titles = {
-            "Apps": "Applications",
             "Developer": "Developers",
+            "Software": "Applications",
             "User": "Users",
-            "MemilikiAplikasi": "Application Ownership",
+            "Lagu": "Songs",
             "SoundTrack": "Soundtracks",
             "VideoGames": "Video Games",
-            "MenggunakanLagu": "Song Usage",
-            "Lagu": "Songs",
-            "Follow": "Followings",
-            "Pertemanan": "Friendships",
-            "Forum": "Forums",
-            "MembuatForum": "Forum Creation",
-            "Post": "Posts",
-            "Vote": "Votes",
-            "VideoGamesDLC": "Video Game DLCs",
             "DLC": "Downloadable Content",
             "Award": "Awards",
+            "Forum": "Forums",
+            "MemilikiAplikasi": "Application Ownership",
+            "MenggunakanLagu": "Song Usage",
+            "Follow": "Followings",
+            "Pertemanan": "Friendships",
+            "Post": "Posts",
+            "Vote": "Votes",
             "Genre": "Genres",
             "All" : "Alls",
+            "Exit" : "exit",
         }
         for idx, (table_name, _) in enumerate(menu_titles.items(), start=1):
             print(f"{idx}. {table_name}")
@@ -158,17 +159,23 @@ class menu():
         self.executePertemanan()
         self.executeApps()
         self.executeMemilikiAplikasi()
-        self.executeFollow()
         self.executeVideoGames()
         self.executeDLC()
-        self.executeVideoGamesDLC()
+        # self.executeVideoGamesDLC()
         self.executeAward()
         self.executeGenre()
-        self.executeSoundTrack()
         self.executeLagu()
+        self.executeSoundTrack()
         self.executeMenggunakanLagu()
         self.executeForum()
         self.executePost()
-        self.executeMembuatForum()
+        # self.executeMembuatForum()
         self.executeVote()
+        self.executeFollow()
         
+        if(self.userInput == "Alll"):
+            print("All Data Successfully Created")
+            print("Open your Database")
+            return
+        if(self.userInput != "Exit"):
+            self.showMenu()

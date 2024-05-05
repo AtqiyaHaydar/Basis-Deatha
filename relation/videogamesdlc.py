@@ -9,7 +9,6 @@ class VideoGamesDLS(Seeding):
   def seeding(self, num_orders):
     self.dlc_ids = self.get_all_dlc_id()
     self.videogames_ids = self.get_all_videogames_id()
-
     gameID = self.videogames_ids[self.random.randint(0, len(self.videogames_ids) - 1)]
     dlcID = self.dlc_ids[self.random.randint(0, len(self.dlc_ids) - 1)]
 

@@ -1,19 +1,16 @@
-from Seeding import Seeding
-
-class VideoGames(Seeding):
+from relation.apps import Apps
+class VideoGames(Apps):
   def __init__(self, connection):
     self.app_ids = []
     super().__init__(connection)
-  
+
   def seeding(self, num_records):
-    self.app_ids = self.get_all_app_id()
-
-    for _ in range(num_records):
-      gameID = self.app_ids[self.random.randint(0, len(self.app_ids) - 1)]
-
+    super().seeding(num_records)
+    last_appID = self.getLastPopulatedID(num_records)
+    for _, item in enumerate(last_appID):
+      gameID = item
       sql = f"INSERT INTO VIDEOGAMES (gameID) VALUES (%s)"
-
-      val = (gameID)
+      val = (gameID,)
 
       self.cursor.execute(sql, val)
       self.connection.commit()

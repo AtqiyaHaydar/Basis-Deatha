@@ -66,31 +66,21 @@ class DatabaseInitiator:
             '''
             CREATE TABLE DLC(
                 dlcID INTEGER NOT NULL AUTO_INCREMENT,
+                gameID INTEGER NOT NULL,
                 judul VARCHAR(50) NOT NULL,
                 harga INTEGER NOT NULL DEFAULT 0,
                 tanggal_peluncuran DATE,
-                PRIMARY KEY(dlcID)
+                PRIMARY KEY(dlcID),
+                FOREIGN KEY(gameID) REFERENCES VideoGames(gameID) ON DELETE CASCADE
             )
             '''        
-        )
-
-    def CreateTableVideoGamesDLC(self):
-        self.cursor.execute(
-            '''
-            CREATE TABLE VideoGamesDLC(
-                dlcID INTEGER PRIMARY KEY NOT NULL,
-                gameID INTEGER NOT NULL,
-                FOREIGN KEY (dlcID) REFERENCES DLC(dlcID) ON DELETE CASCADE,
-                FOREIGN KEY (gameID) REFERENCES VideoGames(gameID) ON DELETE CASCADE
-            )
-            '''
         )
 
     def CreateTableDeveloper(self):
         self.cursor.execute(
             '''
             CREATE TABLE Developer (
-                devID INTEGER AUTO_INCREMENT,
+                devID INTEGER AUTO_INCREMENT NOT NULL,
                 email VARCHAR(255) NOT NULL,
                 username VARCHAR(255) NOT NULL,
                 password VARCHAR(255) NOT NULL,
@@ -142,7 +132,6 @@ class DatabaseInitiator:
             '''
             CREATE TABLE SoundTrack(
                 soundtrackID INTEGER PRIMARY KEY NOT NULL,
-                durasi_total_lagu FLOAT DEFAULT 0 NOT NULL,
                 FOREIGN KEY (soundtrackID) REFERENCES Apps(appID) ON DELETE CASCADE
             )
             '''
@@ -165,7 +154,7 @@ class DatabaseInitiator:
             '''
             Create TABLE Lagu(
                 laguID INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
-                judul_lagu VARCHAR(30) NOT NULL,
+                judul_lagu VARCHAR(255) NOT NULL,
                 durasi_lagu FLOAT DEFAULT 0 NOT NULL
             )
             '''
@@ -200,26 +189,30 @@ class DatabaseInitiator:
             '''
             CREATE TABLE Forum(
                 forumID INTEGER NOT NULL AUTO_INCREMENT,
-                judul VARCHAR(255) NOT NULL,
-                waktu_pembuatan_forum DATE NOT NULL,
-                PRIMARY KEY (forumID)
-            )
-            '''
-        )
-    def CreateTableMembuatForum(self):
-        self.cursor.execute(
-            '''
-            CREATE TABLE MembuatForum(
-                forumID INTEGER NOT NULL,
                 userID INTEGER NOT NULL,
                 appID INTEGER NOT NULL,
-                PRIMARY KEY (forumID, userID, appID),
-                FOREIGN KEY (forumID) REFERENCES Forum(forumID) ON DELETE CASCADE,
+                judul VARCHAR(255) NOT NULL,
+                waktu_pembuatan_forum DATE NOT NULL,
+                PRIMARY KEY (forumID),
                 FOREIGN KEY (userID) REFERENCES User(userID) ON DELETE CASCADE,
                 FOREIGN KEY (appID) REFERENCES Apps(appID) ON DELETE CASCADE
             )
-            '''   
+            '''
         )
+    # def CreateTableMembuatForum(self):
+    #     self.cursor.execute(
+    #         '''
+    #         CREATE TABLE MembuatForum(
+    #             forumID INTEGER NOT NULL,
+    #             userID INTEGER NOT NULL,
+    #             appID INTEGER NOT NULL,
+    #             PRIMARY KEY (forumID, userID, appID),
+    #             FOREIGN KEY (forumID) REFERENCES Forum(forumID) ON DELETE CASCADE,
+    #             FOREIGN KEY (userID) REFERENCES User(userID) ON DELETE CASCADE,
+    #             FOREIGN KEY (appID) REFERENCES Apps(appID) ON DELETE CASCADE
+    #         )
+    #         '''   
+    #     )
     def CreateTablePost(self):
         self.cursor.execute(
             '''
@@ -230,7 +223,7 @@ class DatabaseInitiator:
                 konten_post VARCHAR(255) NOT NULL,
                 waktu_pembuatan_post date NOT NULL,
                 PRIMARY KEY(postID),
-                FOREIGN KEY (forumID) REFERENCES Forum(forumID) ON DELETE CASCADE,
+                FOREIGN KEY (forumID) REFERENCES Forum(forumID),
                 FOREIGN KEY (userID) REFERENCES User(userID) ON DELETE CASCADE
             )
             '''
@@ -254,7 +247,8 @@ class DatabaseInitiator:
             CREATE TABLE Award(
                 awardID INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
                 gameID INTEGER,
-                kategori VARCHAR(20) NOT NULL,
+                kategori VARCHAR(50) NOT NULL,
+                tahun YEAR,
                 FOREIGN KEY (gameID) REFERENCES VideoGames(gameID) ON DELETE SET NULL
             )
             '''
@@ -263,8 +257,9 @@ class DatabaseInitiator:
         self.cursor.execute(
             '''
             CREATE TABLE Genre(
-                gameID INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+                gameID INTEGER AUTO_INCREMENT NOT NULL,
                 genre VARCHAR(20) NOT NULL,
+                PRIMARY KEY(gameID, genre),
                 FOREIGN KEY (gameID) REFERENCES VideoGames(gameID) ON DELETE CASCADE
             )
             '''
@@ -286,11 +281,10 @@ class DatabaseInitiator:
         self.CreateTableGenre()
         self.CreateTableFollow()
         self.CreateTableForum()
-        self.CreateTableMembuatForum()
+        # self.CreateTableMembuatForum()
         self.CreateTableVote()
         self.CreateTablePost()
         self.CreateTableDLC()
-        self.CreateTableVideoGamesDLC()
+        # self.CreateTableVideoGamesDLC()
 
         self.connection.commit()
-        self.connection.close()
