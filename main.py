@@ -3,7 +3,7 @@ from DatabaseInitiator import DatabaseInitiator
 
 # Check your port by Input
 # SHOW GLOBAL VARIABLES LIKE 'port'
-port = 49680
+port = 3306
 host = "localhost"
 user = "root"
 password = ""
