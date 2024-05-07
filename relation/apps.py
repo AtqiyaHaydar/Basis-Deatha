@@ -1,4 +1,5 @@
 from Seeding import Seeding
+
 class Apps(Seeding):
   def __init__(self, connection):
     self.dev_ids = []

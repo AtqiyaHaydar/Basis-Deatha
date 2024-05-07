@@ -22,10 +22,9 @@ class Developer(Seeding):
             nama_depan = self.fake.first_name()
             nama_belakang = self.fake.last_name()
             tanggal_lahir = self.fake.date_of_birth()
-            usia = self.calculate_age(tanggal_lahir)
 
-            sql = "INSERT INTO DEVELOPER (email, username, password, nama_depan, nama_belakang, tanggal_lahir, usia) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-            val = (email, username, password, nama_depan, nama_belakang, tanggal_lahir, usia)
+            sql = "INSERT INTO DEVELOPER (email, username, password, nama_depan, nama_belakang, tanggal_lahir) VALUES (%s, %s, %s, %s, %s, %s)"
+            val = (email, username, password, nama_depan, nama_belakang, tanggal_lahir)
 
             self.cursor.execute(sql, val)
             self.connection.commit()
