@@ -87,7 +87,6 @@ class DatabaseInitiator:
                 nama_depan VARCHAR(255) NOT NULL,
                 nama_belakang VARCHAR(255) DEFAULT "",
                 tanggal_lahir DATE,
-                usia INTEGER,
                 PRIMARY KEY(devID, email, username)
             )
             '''
@@ -104,7 +103,6 @@ class DatabaseInitiator:
                 nama_depan VARCHAR(255) NOT NULL, 
                 nama_belakang VARCHAR(255) DEFAULT "",
                 tanggal_lahir date,
-                usia INTEGER,
                 level INTEGER DEFAULT 0,
                 balance INTEGER DEFAULT 0,
                 PRIMARY KEY(userID, email, username)
