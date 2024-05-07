@@ -14,14 +14,11 @@ class Pertemanan(Seeding):
 
   def generate_unique_pairof_userids(self, num_records):
       user_id_pairs = set()
-      attempts = 0
-      attempts = 0
-      while len(user_id_pairs) < num_records and attempts < 100:
+      while len(user_id_pairs) < num_records:
           user1id = self.user_ids[self.random.randint(0, len(self.user_ids) - 1)]
           user2id = self.user_ids[self.random.randint(0, len(self.user_ids) - 1)]
           if user1id != user2id and (user1id, user2id) not in self.friend and (user2id, user1id) not in self.friend:
               user_id_pairs.add((user1id, user2id))
-          attempts += 1
       return user_id_pairs
 
 
